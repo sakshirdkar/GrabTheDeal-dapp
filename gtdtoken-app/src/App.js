@@ -49,6 +49,10 @@ class App extends Component {
     //Call Owner 
     this.fetchOwner();
   }
+
+  isHex(s) {
+
+  }
   async fetchQueueLength() {
 
     const queueLength = await this.state.GTDToken.methods.getQueueLength().call();
@@ -78,8 +82,9 @@ class App extends Component {
 
   addNewStock = async (e) => {
     e.preventDefault();
+
     const { newStock } = this.state;
-    if (newStock > 0) {
+    if (newStock > 0 && newStock !== '') {
       await this.state.GTDToken.methods.addNewStock(newStock).send({
         from: this.state.owner,
       });
@@ -90,11 +95,13 @@ class App extends Component {
 
   balanceOf = async () => {
     const { addressBalance } = this.state
-    const tokenBalance = await this.state.GTDToken.methods.balanceOf(addressBalance).call();
-    this.setState({ tokenBalance: tokenBalance });
+    if (addressBalance !== '' && addressBalance.length == 42) {
+      const tokenBalance = await this.state.GTDToken.methods.balanceOf(addressBalance).call();
+      this.setState({ tokenBalance: tokenBalance });
 
-    console.log("Token Balance is :", tokenBalance);
-    this.setState({ addressBalance: "" });
+      console.log("Token Balance is :", tokenBalance);
+      this.setState({ addressBalance: "" });
+    }
   }
 
   handleChange = (e) => {
