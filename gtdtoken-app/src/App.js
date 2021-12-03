@@ -95,7 +95,7 @@ class App extends Component {
 
   balanceOf = async () => {
     const { addressBalance } = this.state
-    if (addressBalance !== '' && addressBalance.length == 42) {
+    if (addressBalance !== '' && addressBalance.length === 42) {
       const tokenBalance = await this.state.GTDToken.methods.balanceOf(addressBalance).call();
       this.setState({ tokenBalance: tokenBalance });
 
