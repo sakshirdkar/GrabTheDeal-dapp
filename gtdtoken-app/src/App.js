@@ -14,11 +14,13 @@ class App extends Component {
     super(props);
     this.state = {
       queueLength: 0,
-      owner: '0x13b77Ad9Fc0f921dB4b1D0b3eE8f9A7F50BbDA2D',
+      owner: '0xa59d26e420d5745b87cB0f19B1C39222cFb0e258',
       account: '',
       newStock: 0,
       addressBalance: '',
-      ether: ''
+      ether: '',
+      tokenBalance: '',
+
     }
   }
   componentDidMount() {
@@ -84,6 +86,8 @@ class App extends Component {
   balanceOf = async () => {
     const { addressBalance } = this.state
     const tokenBalance = await this.state.GTDToken.methods.balanceOf(addressBalance).call();
+    this.setState({ tokenBalance: tokenBalance });
+
     console.log("Token Balance is :", tokenBalance);
   }
 
@@ -117,6 +121,7 @@ class App extends Component {
 
 
   render() {
+    const { tokenBalance } = this.state;
     return (
       <div className="App">
         <h1> GTD Token App </h1>
@@ -139,8 +144,8 @@ class App extends Component {
           </Button>
         </div>
 
-
-
+        <br></br>
+        <p> {tokenBalance}</p>
 
         {this.state.account === this.state.owner ?
           <div>
