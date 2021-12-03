@@ -5,6 +5,7 @@ import { GTDTokenABI, GTDTokenAddress } from './config';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import { ethers } from 'ethers';
 
 
@@ -25,6 +26,9 @@ class App extends Component {
   }
   componentDidMount() {
     this.loadBlockChainData();
+    window.ethereum.on('accountsChanged', function () {
+      window.location.reload();
+    })
   }
 
   async loadBlockChainData() {
@@ -124,26 +128,33 @@ class App extends Component {
     const { tokenBalance } = this.state;
     return (
       <div className="App">
-        <h1> GTD Token App </h1>
-
-
-        <Button variant="outline-info" size="lg" onClick={this.expressInterest}>
-          Express Interest
-        </Button>
-
+        <h1 class='text text-primary'>Grab the Deal</h1>
+        <h2> Currently running deal - vaccines  </h2>
+        <br></br>
+        
+        {this.state.account !== this.state.owner ?
+          <div>
+            <Button variant="outline-info" size="lg" onClick={this.expressInterest}>
+            Express Interest in vaccine
+          </Button>
+          <br></br>
+          <br></br>
+          <br></br> 
+          </div>
+          : <div></div>
+        }
         <div>
           <br></br>
 
-          <Form.Control name='addressBalance' size="lg" type="text" placeholder="Enter address to view the token balance" onChange={this.handleChange} />
+          <Form.Control class ="formstyle" name='addressBalance'  size="lg" type="text" placeholder="Enter the address for which you want to view the token(vaccine) balance" onChange={this.handleChange} />
 
 
           <br></br>
 
           <Button variant="outline-info" size="lg" onClick={this.balanceOf}>
-            Check Token Balance
+            Get vaccine count by address
           </Button>
         </div>
-
         <br></br>
         <p> {tokenBalance}</p>
 
@@ -153,6 +164,8 @@ class App extends Component {
             <Button variant="outline-info" size="lg" onClick={this.initiateSelling}>
               Initiate Selling
             </Button>
+            <br></br>
+            <br></br>
             <br></br>
 
             <Form.Control name='newStock' size="lg" type="text" placeholder="Enter New Stock Value" onChange={this.handleChange} />
@@ -170,7 +183,7 @@ class App extends Component {
 
             <br></br>
 
-            <Form.Control name='ether' size="lg" type="text" placeholder="Enter ether value" onChange={this.handleChange} />
+            <Form.Control name='ether' size="lg" type="text" placeholder="Enter ether value to donate" onChange={this.handleChange} />
 
 
             <br></br>
