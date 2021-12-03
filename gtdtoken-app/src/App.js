@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import Web3 from 'web3';
 import React, { Component } from 'react';
 import { GTDTokenABI, GTDTokenAddress } from './config';
@@ -85,6 +84,8 @@ class App extends Component {
         from: this.state.owner,
       });
     }
+    this.setState({ newStock: "" });
+
   }
 
   balanceOf = async () => {
@@ -93,6 +94,7 @@ class App extends Component {
     this.setState({ tokenBalance: tokenBalance });
 
     console.log("Token Balance is :", tokenBalance);
+    this.setState({ addressBalance: "" });
   }
 
   handleChange = (e) => {
@@ -125,28 +127,28 @@ class App extends Component {
 
 
   render() {
-    const { tokenBalance } = this.state;
+    const { tokenBalance, addressBalance, newStock } = this.state;
     return (
       <div className="App">
-        <h1 class='text text-primary'>Grab the Deal</h1>
+        <h1>Grab the Deal</h1>
         <h2> Currently running deal - vaccines  </h2>
         <br></br>
-        
+
         {this.state.account !== this.state.owner ?
           <div>
             <Button variant="outline-info" size="lg" onClick={this.expressInterest}>
-            Express Interest in vaccine
-          </Button>
-          <br></br>
-          <br></br>
-          <br></br> 
+              Express Interest in vaccine
+            </Button>
+            <br></br>
+            <br></br>
+            <br></br>
           </div>
           : <div></div>
         }
         <div>
           <br></br>
 
-          <Form.Control class ="formstyle" name='addressBalance'  size="lg" type="text" placeholder="Enter the address for which you want to view the token(vaccine) balance" onChange={this.handleChange} />
+          <Form.Control name='addressBalance' value={addressBalance} size="lg" type="text" placeholder="Enter the address for which you want to view the token(vaccine) balance" onChange={this.handleChange} />
 
 
           <br></br>
@@ -168,7 +170,7 @@ class App extends Component {
             <br></br>
             <br></br>
 
-            <Form.Control name='newStock' size="lg" type="text" placeholder="Enter New Stock Value" onChange={this.handleChange} />
+            <Form.Control name='newStock' value={newStock} size="lg" type="text" placeholder="Enter New Stock Value" onChange={this.handleChange} />
 
             <br></br>
 
